@@ -272,6 +272,14 @@ def get_address(data):
 def get_website(data):
     return clean_link(safe_get(data, 6, 7, 0))
 
+def get_features(data):
+    out = {}
+    features = safe_get(data, 6, 100, 1)
+    if features is not None:
+        for feature in features:
+            out[feature[0]] = [f[1] for f in feature[2]]
+    return out
+
 def get_main_category(data):
     return safe_get(data, 6, 13, 0)
 
@@ -398,9 +406,6 @@ def extract_work_day_time(schedule):
 
 def extract_data(input_str, link):
     data = parse(input_str)
-    
-
-
     categories = get_categories(data)
     place_id = get_place_id(data)
     order_online_links = get_order_online_link(data)
@@ -435,12 +440,16 @@ def extract_data(input_str, link):
         hours = reorder_hours_list(hours)
     else:
         hours = []
+    openinghours = {}
+    for hour in hours:
+        openinghours[hour['day']] = hour['times'][0]
     
     rating = get_rating(data)
     reviews = get_reviews(data)
     phone = get_phone(data)
     address = get_address(data)
     website = get_website(data)
+    features = get_features(data)
     main_category = get_main_category(data)
     user_reviews = get_user_reviews(data)
     
@@ -466,6 +475,8 @@ def extract_data(input_str, link):
         'rating': rating,
         "workday_timing": extract_work_day_time(hours),
         "closed_on": find_close_days(hours),
+        'openinghours': openinghours,
+        'features': features,
         'phone': phone,
         'address': address,
         'review_keywords':review_keywords,

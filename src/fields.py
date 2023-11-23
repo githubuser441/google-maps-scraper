@@ -23,6 +23,8 @@ class Fields:
     OWNER = "owner"
     FEATURED_IMAGE = "featured_image"
     MAIN_CATEGORY = "main_category"
+    FEATURES = "features"
+    OPENINGHOURS = "openinghours"
     CATEGORIES = "categories"
     RATING = "rating"
     WORKDAY_TIMING = "workday_timing"
@@ -64,6 +66,8 @@ DEFAULT_FIELDS_WITHOUT_SOCIAL_DATA = [
     Fields.OWNER, 
     Fields.FEATURED_IMAGE, 
     Fields.MAIN_CATEGORY, 
+    Fields.OPENINGHOURS,
+    Fields.FEATURES, 
     Fields.CATEGORIES , 
     Fields.RATING, 
     Fields.WORKDAY_TIMING, 
